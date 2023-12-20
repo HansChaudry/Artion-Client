@@ -9,9 +9,30 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SignInScreenStyles } from "../styles";
+import { useState } from "react";
+
+interface registerScreenState {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  password1: string;
+  password2: string;
+}
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
+  const [userInfo, setUserInfo] = useState<registerScreenState>({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    password1: "",
+    password2: "",
+  });
+  const handleInfoChange = (info: { name: string; value: string }) => {
+    setUserInfo((prev) => ({ ...prev, [info.name]: info.value }));
+  };
   return (
     <KeyboardAvoidingView style={styles.container}>
       <Text style={{ ...SignInScreenStyles.SignInScreenTitle }}>
@@ -24,6 +45,13 @@ export default function RegisterScreen() {
         }}
         placeholder="First Name"
         autoCapitalize="none"
+        value={userInfo?.first_name}
+        onChange={(event) => {
+          handleInfoChange({
+            name: "first_name",
+            value: event.nativeEvent.text,
+          });
+        }}
       />
       <TextInput
         style={{
@@ -31,6 +59,27 @@ export default function RegisterScreen() {
         }}
         placeholder="Last Name"
         autoCapitalize="none"
+        value={userInfo?.last_name}
+        onChange={(event) => {
+          handleInfoChange({
+            name: "last_name",
+            value: event.nativeEvent.text,
+          });
+        }}
+      />
+      <TextInput
+        style={{
+          ...SignInScreenStyles.SignInScreenInput,
+        }}
+        placeholder="Username"
+        autoCapitalize="none"
+        value={userInfo?.username}
+        onChange={(event) => {
+          handleInfoChange({
+            name: "username",
+            value: event.nativeEvent.text,
+          });
+        }}
       />
       <TextInput
         style={{
@@ -38,6 +87,13 @@ export default function RegisterScreen() {
         }}
         placeholder="Email"
         autoCapitalize="none"
+        value={userInfo?.email}
+        onChange={(event) => {
+          handleInfoChange({
+            name: "email",
+            value: event.nativeEvent.text,
+          });
+        }}
       />
       <TextInput
         style={{
@@ -45,6 +101,13 @@ export default function RegisterScreen() {
         }}
         placeholder="Password"
         secureTextEntry
+        value={userInfo?.password1}
+        onChange={(event) => {
+          handleInfoChange({
+            name: "password1",
+            value: event.nativeEvent.text,
+          });
+        }}
       />
       <TextInput
         style={{
@@ -52,13 +115,21 @@ export default function RegisterScreen() {
         }}
         placeholder="Confirm Password"
         secureTextEntry
+        value={userInfo?.password2}
+        onChange={(event) => {
+          handleInfoChange({
+            name: "password2",
+            value: event.nativeEvent.text,
+          });
+        }}
       />
       <TouchableOpacity
         style={{
           ...SignInScreenStyles.SignInScreenBtn,
         }}
         onPress={() => {
-          navigation.navigate("Home");
+          console.log(userInfo);
+          // navigation.navigate("Home");
         }}
       >
         <Text

@@ -2,9 +2,17 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { homeScreenStyles } from "../styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
+  const session = async () => {
+    const info = await AsyncStorage.getItem("sessionID");
+    console.log(info);
+  };
+  useEffect(() => {
+    session();
+  }, []);
   return (
     <SafeAreaView>
       <StatusBar style="auto" />
