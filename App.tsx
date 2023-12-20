@@ -1,14 +1,27 @@
-import { StatusBar } from "expo-status-bar";
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+} from "@expo-google-fonts/poppins";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LandingScreen from "./screens/LandingScreen";
-import LoginScreen from "./screens/LoginScreen";
-import SignupScreen from "./screens/SignupScreen";
+import SignInScreen from "./screens/SignInScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
 function OnBoard() {
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -18,13 +31,18 @@ function OnBoard() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Log In"
-          component={LoginScreen}
+          name="Sign In"
+          component={SignInScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Sign Up"
-          component={SignupScreen}
+          name="Register"
+          component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
           options={{ headerShown: true }}
         />
       </Stack.Navigator>
